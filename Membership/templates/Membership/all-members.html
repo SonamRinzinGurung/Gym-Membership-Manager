@@ -1,0 +1,71 @@
+{% extends "Membership/layout.html" %}
+
+{% block title %} Members Details {% endblock %}
+
+
+{% block body %}
+
+<h2>Members Detail</h2>
+
+<table class="table table-hover">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Membership Plan</th>
+        <th>Membership Validity</th>
+    </tr>
+    {% for member in page_obj %}
+ 
+    <tr>
+        <td> <a href="{% url 'member-detail' member.id%}" style="text-decoration: none;"> {{member.first_name}}</a></td>
+
+     <td> <a href="{% url 'member-detail' member.id%}" style="text-decoration: none;">{{member.last_name}}</a></td>
+        <td>{{member.email}}</td>
+        <td>{{member.phone_number}}</td>
+        <td>{{member.age}}</td>
+        <td>{{member.gender}}</td>
+        <td>{{member.address}}</td>
+        <td>{{member.membership}}</td>
+        <td>{{member.validity}}</td>
+    </tr>
+    {% empty %}
+    <p>Member does not exists</p>
+    {% endfor %}
+</table>
+
+
+<div class="pagination">
+    <ul class="pagination">
+
+        {% if page_obj.has_previous %}
+
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo Previous</a>
+        {% endif %}
+
+
+        {% for page in page_obj.paginator.page_range %}
+        {% if page == page_obj.number %}
+        <li class="page-item active">
+            <a class="page-link" href="?page={{ page }}">{{ page }} </a>
+        </li>
+        {% else %}
+        <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+        {% endif %}
+        {% endfor %}
+
+
+        {% if page_obj.has_next %}
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo</a>
+
+        {% endif %}
+
+    </ul>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "Membership/layout.html" %}
+
+{% block body %}
+
+    <h2>Register</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+         {{form.username}}
+      </div>
+        <div class="form-group">
+            {{form.first_name}}
+         </div>
+         <div class="form-group">
+            {{form.last_name}}
+         </div>
+         <div class="form-group">
+            {{form.email}}
+         </div>
+         <div class="form-group">
+            {{form.personal_address}}
+         </div>
+         
+         <label for="date_of_birth" style="display: inline-block;">DOB</label>
+         <div class="form-group" style="display: inline-block;">
+            {{form.date_of_birth}}
+         </div>
+        
+         <div class="form-group">
+            {{form.phone_number}}
+         </div> 
+
+        <label for="gender" style="display: inline-block;">Gender</label>
+
+       <div class="form-group" style="display: inline-block;">
+        {{form.gender}}
+     </div>
+     <div class="form-group">
+        {{form.gym_name}}
+     </div>
+     <div class="form-group">
+        {{form.gym_location}}
+     </div>
+     <div class="form-group">
+        {{form.gym_phone}}
+     </div>
+     <div class="form-group">
+        {{form.password}}
+     </div>
+     <div class="form-group">
+      <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password" style="max-width: 300px;">
+  </div>
+       <div class="form-group">
+           <input class="btn btn-primary" type="submit" value="Register">
+        </div>
+    </form>
+
+    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+
+{% endblock %}

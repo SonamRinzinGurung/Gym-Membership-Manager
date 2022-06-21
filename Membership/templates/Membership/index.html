@@ -1,0 +1,13 @@
+{% extends "Membership/layout.html" %}
+
+{% block title %} Home {% endblock %}
+
+
+{% block body %}
+
+<h2>Home</h2>
+{% if user.is_authenticated %}
+<a href="{% url 'membership' %}">Add Membership Plans</a>
+<a href="{% url 'add-members' %}">Add Members</a>
+{% endif %}
+{% endblock %}
