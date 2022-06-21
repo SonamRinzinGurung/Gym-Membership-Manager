@@ -12,4 +12,5 @@ urlpatterns = [
     path("member-search", views.member_search, name='member-search'),
     path("member/<int:id>", views.member_detail, name='member-detail'),
     path("edit", views.edit, name='edit'),
+
 ]
