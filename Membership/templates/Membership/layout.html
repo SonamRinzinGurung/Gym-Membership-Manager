@@ -7,10 +7,8 @@
     <title>{% block title %}Membership Management{% endblock %}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="{% static 'Membership/css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{% static 'Membership/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'Membership/A.style.css.pagespeed.cf.4cGS_Kvzku.css' %}">
-    <script defer="" referrerpolicy="origin" src="{% static 'Membership/s.js.download' %}"></script>
 </head>
 
 <body>
@@ -18,11 +16,10 @@
     <div class="container">
         <div class="row justify-content-between">
             <div class="col">
-                <a class="navbar-brand" href="{% url 'index' %}">Papermag
-                    <span>Magazine</span></a>
+                <a class="navbar-brand" href="{% url 'index' %}">Gym
+                    <span>Membership Manager</span></a>
             </div>
             <div class="col d-flex justify-content-end">
-
             </div>
         </div>
     </div>
