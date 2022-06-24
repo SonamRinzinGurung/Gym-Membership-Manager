@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import  NumberInput, TextInput, EmailInput, ModelForm
+from requests import request
 
 from .models import User, Membership,Members
 
@@ -96,11 +97,12 @@ class MembershipForm(ModelForm):
                'style': style,
                'placeholder': 'Membership Type',
             }),
-            'membership_duration':TextInput(attrs={
-               'class':'form-control',
-               'style': style,
-               'placeholder': 'Membership Duration',
-            }),
+           
+            
+             'membership_duration': forms.Select(choices=(("1 month","1 Month"),("3 months","3 Months"),("6 months","6 Months"),("12 months","12 Months")),
+                                attrs={
+                                    'class':'form-control','style': style}),
+             
             'membership_price':NumberInput(attrs={
                'class':'form-control',
                'style': style,
@@ -111,11 +113,19 @@ class MembershipForm(ModelForm):
         
 class MemberForm(ModelForm):
     
+    
+    
+    def __init__(self,*args,**kwargs):
+        self.request = kwargs.pop("request")
+        super(MemberForm,self).__init__(*args,**kwargs)
+        self.fields["membership"].queryset = Membership.objects.filter(user=self.request.user)
+
     class Meta:
         model = Members
         fields = ['first_name', 'last_name','email', 'phone_number', 'age', 'gender','address', 'membership','validity']
         
-        membership = forms.ModelChoiceField(queryset=Membership.objects.all(), to_field_name="membership_type", empty_label=None)
+
+        membership = forms.ModelChoiceField(queryset=None, to_field_name="membership_type", empty_label=None)
 
         style = 'max-width: 300px;'
         widgets = {
@@ -162,12 +172,16 @@ class MemberForm(ModelForm):
                 'style': style, 
                 'placeholder': 'Membership Validity'}),
             
+            'membership':forms.Select(attrs={
+                'class':'form-control'
+            })
+            
         }
         
         
 class SearchForm(forms.Form):
     search = forms.CharField(label='',max_length=100,widget=forms.TextInput(attrs={
-        'class':'form-control',
+        'class':'form-control pl-3',
         'placeholder': 'Search Member',
     }))
     

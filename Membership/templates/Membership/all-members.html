@@ -5,7 +5,15 @@
 
 {% block body %}
 
-<h2>Members Detail</h2>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h2 style="text-align: center;">All Members</h2>
 
 <table class="table table-hover">
     <tr>

@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 import json
 from .models import User, Membership, Members
 from .forms import MembershipForm, UserForm, MemberForm, SearchForm
@@ -77,6 +77,7 @@ def register(request):
 
 
 def membership(request):
+    plans = Membership.objects.filter(user = request.user).order_by('membership_type')
     template = 'Membership/membership.html'
     if request.method == 'POST':
         form = MembershipForm(request.POST)
@@ -88,21 +89,24 @@ def membership(request):
             membership = Membership(user=request.user, membership_type=mem_type,
                                     membership_duration=mem_duration, membership_price=mem_price)
             membership.save()
+            
+            messages.success(request, 'The membership plan was successfully added')
 
             return render(request, template, {
-                'message': 'Successfully Added Membership Plan',
-                'form': MembershipForm()
+                'form': MembershipForm(),
+                'plans':plans
             })
 
     return render(request, template, {
-        'form': MembershipForm()
+        'form': MembershipForm(),
+        'plans':plans
     })
 
 
 def add_members(request):
     template = 'Membership/add-members.html'
     if request.method == "POST":
-        form = MemberForm(request.POST)
+        form = MemberForm(request.POST,request=request)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -117,14 +121,15 @@ def add_members(request):
             member = Members(gym_owner=request.user, first_name=first_name, last_name=last_name, email=email,
                              phone_number=phone_number, age=age, gender=gender, address=address, membership=membership, validity=validity)
             member.save()
+            
+            messages.success(request, 'Member was successfully added')
 
             return render(request, template, {
-                'message': 'Successfully Added Member into the Gym',
-                'form': MemberForm()
+                'form': MemberForm(request.POST,request=request)
             })
 
     return render(request, template, {
-        'form': MemberForm()
+        'form': MemberForm(request=request)
     })
 
 
@@ -146,7 +151,7 @@ def member_search(request):
         query = form.cleaned_data['search']
         search_member = Members.objects.filter(
             Q(first_name__icontains=query) | Q(last_name__icontains=query)
-        ).order_by('validity').all()
+        ,gym_owner=request.user).order_by('validity').all()
 
         return render(request, 'Membership/member-search-results.html', {
             'search_results': search_member
@@ -179,5 +184,20 @@ def edit(request):
     member.phone_number = phone_number
     member.address = address
     member.save()
+    messages.success(request, 'Member detail was successfully edited. Please reload the page to view the change.')
 
     return HttpResponseRedirect(reverse('member-detail', args=(id,)))
+
+
+@login_required
+def remove(request,id):
+    if request.method == "POST":
+        member = Members.objects.get(pk=id)
+        member.delete()
+        messages.success(request, 'Member was successfully deleted')
+        return HttpResponseRedirect(reverse('all-members'))
+    else:
+        return render(request, "Membership/remove-member.html",{
+            "member":Members.objects.get(pk=id)
+
+        })

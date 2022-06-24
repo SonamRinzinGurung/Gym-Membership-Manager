@@ -4,7 +4,15 @@
 
 {% block body %}
 
-<h2>Member Detail</h2>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h2 style="text-align: center;" id="head">Member Detail</h2>
 {% if user.is_authenticated %}
 
 <section style="background-color: #eee;">
@@ -21,7 +29,8 @@
               <p class="text-muted mb-4">{{member.address}}</p>
               <div class="justify-content-center mb-2">
                 <button type="button" class="btn btn-primary" id="edit-member" data-id="{{member.id}}">Edit</button>
-                <button type="button" class="btn btn-outline-primary ms-1">Remove</button>
+                <a type="button" class="btn btn-outline-danger ms-1" href="{% url 'remove' member.id %}" >Remove</a>
+               
               </div>
             </div>
           </div>

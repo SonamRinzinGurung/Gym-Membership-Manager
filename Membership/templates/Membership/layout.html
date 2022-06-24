@@ -7,8 +7,9 @@
     <title>{% block title %}Membership Management{% endblock %}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'Membership/A.style.css.pagespeed.cf.4cGS_Kvzku.css' %}">
+    {% block style %} {% endblock %}
 </head>
 
 <body>
@@ -29,9 +30,10 @@
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fa fa-bars"></span> Menu
             </button>
-            <form action="#" class="searchform order-lg-last">
+            {% if user.is_authenticated %}
+            <form action="{% url 'member-search' %}" class="searchform order-lg-last">
                 <div class="form-group d-flex">
-                    <input type="text" class="form-control pl-3" placeholder="Search">
+                    {{searchform}}
                     <button type="submit" placeholder="" class="form-control search">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-search" viewBox="0 0 16 16">
@@ -40,6 +42,7 @@
                         </svg></button>
                 </div>
             </form>
+            {%endif%}
 
 
             <div class="collapse navbar-collapse" id="ftco-nav">
@@ -47,11 +50,9 @@
                     <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a href="{% url 'all-members' %}" class="nav-link">All Members</a></li>
+                    <li class="nav-item"><a href="{% url 'add-members' %}" class="nav-link">Add Members</a></li>
+                    <li class="nav-item"><a href="{% url 'membership' %}" class="nav-link">Membership Plan</a></li>
                     {%endif%}
-                    <li class="nav-item"><a href="https://preview.colorlib.com/theme/bootstrap/website-menu-12/?#"
-                            class="nav-link">Blog</a></li>
-                    <li class="nav-item"><a href="https://preview.colorlib.com/theme/bootstrap/website-menu-12/?#"
-                            class="nav-link">Something</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Account</a>

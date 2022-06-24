@@ -1,15 +1,46 @@
 {% extends "Membership/layout.html" %}
-
+{% load static %}
 {% block title %} Membership Plans {% endblock %}
-
+{% block style %} <link rel="stylesheet" href="{% static 'Membership/styles.css' %}"> {% endblock %}
 {% block body %}
 
-<h2>Add Membership Plans</h2>
-{% if message %}
-<div>{{ message }}</div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
 
-<form action="{% url 'membership' %}" method="post">
+<h2 style="text-align: center;">All Members</h2>
+
+<table class="table table-hover">
+    <tr>
+        <th>Membership Type</th>
+        <th>Membership Duration</th>
+        <th>Membership Price</th>
+        
+    </tr>
+    {% for plan in plans %}
+ 
+    <tr>
+ 
+        <td>{{plan.membership_type}}</td>
+        <td>{{plan.membership_duration}}</td>
+        <td>{{plan.membership_price}}</td>
+    
+    </tr>
+    {% empty %}
+    <p>Membership plan does not exists</p>
+    {% endfor %}
+</table>
+
+
+<div class="border">
+<h2 style="text-align: center;" id="page-title">Add Membership Plans</h2>
+</div>
+<div class="d-flex justify-content-center"> 
+<form action="{% url 'membership' %}" method="post" id="form-div">
     {% csrf_token %}
     <div class="form-group">
         {{form.membership_type}}
@@ -21,9 +52,10 @@
         {{form.membership_price}}
     </div>
     <div class="form-group">
-        <input type="submit" class="btn btn-primary">
+        <input type="submit" class="btn btn-primary btn-sm">
     </div>
 </form>
+</div>
 
 
 {% endblock %}

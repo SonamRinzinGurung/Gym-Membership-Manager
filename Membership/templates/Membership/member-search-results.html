@@ -19,8 +19,9 @@
     </tr>
     {% for result in search_results %}
     <tr>
-        <td>{{result.first_name}}</td>
-        <td>{{result.last_name}}</td>
+        <td> <a href="{% url 'member-detail' result.id%}" style="text-decoration: none;"> {{result.first_name}}</a></td>
+
+        <td> <a href="{% url 'member-detail' result.id%}" style="text-decoration: none;">{{result.last_name}}</a></td>
         <td>{{result.email}}</td>
         <td>{{result.phone_number}}</td>
         <td>{{result.age}}</td>
