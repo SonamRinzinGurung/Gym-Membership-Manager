@@ -20,7 +20,10 @@ class Membership(models.Model):
     membership_duration = models.CharField(max_length=20, blank=False)
 
     def __str__(self):
-        return f"{self.membership_type} for {self.membership_duration}"
+        if self.membership_duration == "1" :
+            return f"{self.membership_type} for {self.membership_duration} month"
+        else:
+            return f"{self.membership_type} for {self.membership_duration} months"
 
 
 class Members(models.Model):

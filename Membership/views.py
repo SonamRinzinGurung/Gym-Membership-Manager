@@ -77,7 +77,7 @@ def register(request):
 
 
 def membership(request):
-    plans = Membership.objects.filter(user = request.user).order_by('membership_type')
+    plans = Membership.objects.filter(user = request.user).order_by('membership_type','membership_price')
     template = 'Membership/membership.html'
     if request.method == 'POST':
         form = MembershipForm(request.POST)
@@ -136,7 +136,7 @@ def add_members(request):
 def all_members(request):
     members = Members.objects.filter(
         gym_owner=request.user).order_by('validity').all()
-    paginator = Paginator(members, 10)
+    paginator = Paginator(members, 5)
     page_num = request.GET.get('page')
     page_obj = paginator.get_page(page_num)
     return render(request, 'Membership/all-members.html', {

@@ -99,7 +99,7 @@ class MembershipForm(ModelForm):
             }),
            
             
-             'membership_duration': forms.Select(choices=(("1 month","1 Month"),("3 months","3 Months"),("6 months","6 Months"),("12 months","12 Months")),
+             'membership_duration': forms.Select(choices=(("1","1 Month"),("3","3 Months"),("6","6 Months"),("12","12 Months")),
                                 attrs={
                                     'class':'form-control','style': style}),
              

@@ -49,8 +49,14 @@
                 </div>
             </div>
         </td>
-        <td>{{plan.membership_duration}}</td>
-        <td id="price-{{plan.id}}">{{plan.membership_price}}</td>
+
+        {% if plan.membership_duration != "1" %}
+        <td>{{plan.membership_duration}} months</td>
+        {% else %}
+        <td>{{plan.membership_duration}} month</td>
+        {% endif %}
+
+       <td> Rs.<span id="price-{{plan.id}}">{{plan.membership_price}}</span></td>
 
     </tr>
     {% empty %}
@@ -69,7 +75,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>Do you really want to remove this membership plan? This process cannot be undone.</p>
+				<p>Do you really want to remove this membership plan? Removing the membership plan will also delete the concurrent members as well. This process cannot be undone.</p>
 			</div>
             <form action="" method="post" id="remove-form">
                 {% csrf_token %}
