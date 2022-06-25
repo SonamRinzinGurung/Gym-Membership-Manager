@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from datetime import date
 
 class User(AbstractUser):
     personal_address = models.CharField(max_length=100, blank=False)
@@ -39,3 +39,7 @@ class Members(models.Model):
     
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+    def is_valid(self):
+        return date.today() < self.validity
