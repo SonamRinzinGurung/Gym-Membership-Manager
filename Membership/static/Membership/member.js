@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
   element.addEventListener('click', () => {
     display_edit(element.dataset.id)
   })
+  const renew_btn = document.querySelector('#renew')
+  renew_btn.addEventListener('click', ()=>{
+    display_renew(renew_btn.dataset.id)
+  })
 })
 
 
@@ -85,6 +89,60 @@ function editMember(id) {
       phone: phone,
       age: age,
       address: address,
+    }),
+    headers: { "X-CSRFToken": csrftoken },
+
+  })
+  window.location.reload(`${id}`);
+}
+
+
+
+function display_renew(id) {
+
+
+
+  document.querySelector('#head').style.display = 'none'
+  document.querySelector('#card-profile').style.display = 'none'
+
+  document.querySelector('#member-details').innerHTML =
+    `
+    <h2 style="text-align: center;">Renew Membership </h2>
+
+    <form action="" id="renew-form" onsubmit="return false">
+      
+    <div class="row">
+      <div class="col-sm-3">
+        <p class="mb-0">Valid Until</p>
+      </div>
+      <div class="col-sm-9">
+        <input type="date"  class="form-control" id="valid-date">
+      </div>
+    </div>
+ 
+   
+   
+    <input type="submit"  value ="Renew" class="btn btn-primary btn-sm">
+
+</form>`
+
+  document.querySelector('#renew-form').addEventListener('submit', () => renew(id))
+
+}
+
+
+function renew(id){
+
+  let csrftoken = getCookie('csrftoken');
+
+
+  const date = document.querySelector('#valid-date').value
+
+  fetch('/renew', {
+    method: 'POST',
+    body: JSON.stringify({
+      id: id,
+      date:date
     }),
     headers: { "X-CSRFToken": csrftoken },
 

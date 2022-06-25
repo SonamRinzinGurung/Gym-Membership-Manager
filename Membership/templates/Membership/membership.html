@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %} Membership Plans {% endblock %}
 {% block style %} <link rel="stylesheet" href="{% static 'Membership/styles.css' %}"> {% endblock %}
+
 {% block body %}
 
 {% if messages %}
@@ -11,8 +12,20 @@
     {% endfor %}
 </ul>
 {% endif %}
+<div>
+    <h2 style="text-align: center;">All Members</h2>
 
-<h2 style="text-align: center;">All Members</h2>
+    <div class="dropdown">
+        <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Action 
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <button class="dropdown-item" href="#" id="edit-btn" data-id="">Edit</button>
+          <a class="dropdown-item" href="#">Remove</a>
+        </div>
+      </div>
+</div>
+
 
 <table class="table table-hover">
     <tr>
@@ -58,4 +71,7 @@
 </div>
 
 
+{% endblock %}
+{% block script %}
+<script src="{% static 'Membership/membership.js' %}"></script>
 {% endblock %}

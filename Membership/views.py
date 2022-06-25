@@ -201,3 +201,19 @@ def remove(request,id):
             "member":Members.objects.get(pk=id)
 
         })
+        
+
+@login_required
+def renew(request):
+    if request.method != 'POST':
+        JsonResponse({'error':'Invalid Request.'})
+        
+    data = json.loads(request.body)
+    id  = data.get('id','')
+    date = data.get('date','')
+    member  = Members.objects.get(pk=id)
+    member.validity = date
+    member.save()
+    
+    messages.success(request, 'Membership validity was successfully renewed.')
+    return HttpResponseRedirect(reverse('member-detail', args=(id)))
