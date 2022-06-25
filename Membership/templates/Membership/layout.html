@@ -47,9 +47,11 @@
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
+                    {% if user.is_authenticated == False %}
                     <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                    {% endif %}
                     {% if user.is_authenticated %}
-                    <li class="nav-item"><a href="{% url 'all-members' %}" class="nav-link">All Members</a></li>
+                    <li class="nav-item active"><a href="{% url 'all-members' %}" class="nav-link">All Members</a></li>
                     <li class="nav-item"><a href="{% url 'add-members' %}" class="nav-link">Add Members</a></li>
                     <li class="nav-item"><a href="{% url 'membership' %}" class="nav-link">Membership Plan</a></li>
                     {%endif%}

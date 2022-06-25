@@ -1,29 +1,26 @@
 {% extends "Membership/layout.html" %}
 {% load static %}
 {% block title %} Membership Plans {% endblock %}
-{% block style %} <link rel="stylesheet" href="{% static 'Membership/styles.css' %}"> {% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'Membership/styles.css' %}">
+<link rel="stylesheet" href="{% static 'Membership/remove-style.css' %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+{% endblock %}
 
 {% block body %}
 
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
 </ul>
 {% endif %}
 <div>
     <h2 style="text-align: center;">All Members</h2>
 
-    <div class="dropdown">
-        <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Action 
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <button class="dropdown-item" href="#" id="edit-btn" data-id="">Edit</button>
-          <a class="dropdown-item" href="#">Remove</a>
-        </div>
-      </div>
+
 </div>
 
 
@@ -32,42 +29,79 @@
         <th>Membership Type</th>
         <th>Membership Duration</th>
         <th>Membership Price</th>
-        
+
     </tr>
     {% for plan in plans %}
- 
+
     <tr>
- 
-        <td>{{plan.membership_type}}</td>
+
+        <td>
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary">{{plan.membership_type}}</button>
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" data-id="{{plan.id}}" id="edit-btn">Edit</button>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#myModal" data-toggle="modal" id = "delete-plan" data-id="{{plan.id}}">Delete</a>
+                </div>
+            </div>
+        </td>
         <td>{{plan.membership_duration}}</td>
-        <td>{{plan.membership_price}}</td>
-    
+        <td id="price-{{plan.id}}">{{plan.membership_price}}</td>
+
     </tr>
     {% empty %}
     <p>Membership plan does not exists</p>
     {% endfor %}
 </table>
 
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header flex-column">
+				<div class="icon-box">
+					<i class="material-icons">&#xE5CD;</i>
+				</div>						
+				<h4 class="modal-title w-100">Are you sure?</h4>	
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Do you really want to remove this membership plan? This process cannot be undone.</p>
+			</div>
+            <form action="" method="post" id="remove-form">
+                {% csrf_token %}
+			<div class="modal-footer justify-content-center">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				<button type="submit" class="btn btn-danger"> Remove </button>
+			</div>
+        </form>
+		</div>
+	</div>
+</div> 
+
 
 <div class="border">
-<h2 style="text-align: center;" id="page-title">Add Membership Plans</h2>
+    <h2 style="text-align: center;" id="page-title">Add Membership Plans</h2>
 </div>
-<div class="d-flex justify-content-center"> 
-<form action="{% url 'membership' %}" method="post" id="form-div">
-    {% csrf_token %}
-    <div class="form-group">
-        {{form.membership_type}}
-    </div>
-    <div class="form-group">
-        {{form.membership_duration}}
-    </div>
-    <div class="form-group">
-        {{form.membership_price}}
-    </div>
-    <div class="form-group">
-        <input type="submit" class="btn btn-primary btn-sm">
-    </div>
-</form>
+<div class="d-flex justify-content-center">
+    <form action="{% url 'membership' %}" method="post" id="form-div">
+        {% csrf_token %}
+        <div class="form-group">
+            {{form.membership_type}}
+        </div>
+        <div class="form-group">
+            {{form.membership_duration}}
+        </div>
+        <div class="form-group">
+            {{form.membership_price}}
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary btn-sm">
+        </div>
+    </form>
 </div>
 
 

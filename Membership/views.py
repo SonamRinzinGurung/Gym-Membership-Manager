@@ -132,7 +132,7 @@ def add_members(request):
         'form': MemberForm(request=request)
     })
 
-
+@login_required(login_url='/login',redirect_field_name=None)
 def all_members(request):
     members = Members.objects.filter(
         gym_owner=request.user).order_by('validity').all()
@@ -211,9 +211,34 @@ def renew(request):
     data = json.loads(request.body)
     id  = data.get('id','')
     date = data.get('date','')
+    
     member  = Members.objects.get(pk=id)
     member.validity = date
     member.save()
     
     messages.success(request, 'Membership validity was successfully renewed.')
     return HttpResponseRedirect(reverse('member-detail', args=(id)))
+
+
+
+def edit_price(request):
+    if request.method != 'POST':
+        return JsonResponse({'error':'Invalid Request'})
+    
+    data = json.loads(request.body)
+    id = data.get('id','')
+    new_price = data.get('new_price','')
+    
+    membership = Membership.objects.get(pk = id)
+    membership.membership_price = new_price
+    membership.save()
+    
+    
+    
+@login_required
+def remove_plan(request,id):
+    if request.method == "POST":
+        membership = Membership.objects.get(pk=id)
+        membership.delete()
+        messages.success(request, 'Membership plan was successfully deleted')
+        return HttpResponseRedirect(reverse('membership'))

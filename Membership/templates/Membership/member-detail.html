@@ -31,7 +31,7 @@
                 <button type="button" class="btn btn-primary" id="edit-member" data-id="{{member.id}}">Edit</button>
                 <a type="button" class="btn btn-outline-danger ms-1" href="{% url 'remove' member.id %}" >Remove</a>
                 {% if member.is_valid == False %}
-               <br><br> <a type="button" class="btn btn-success" data-id="{{member.id}}" id="renew">Renew Membership</a>
+               <br><br> <a type="button" class="btn btn-outline-success" data-id="{{member.id}}" id="renew">Renew Membership</a>
              
                 {%endif%}
               </div>
