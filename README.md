@@ -24,6 +24,10 @@ This application is designed for gym owners or managers. The application stores 
 
 <img width="960" alt="image" src="https://user-images.githubusercontent.com/100353887/181903885-219d1862-13bb-4ad3-b104-425a4b517dcc.png">
 
+### Members Detail Page
+
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/100353887/181904073-b0527e3c-47a5-4813-a41d-116caf2befcf.png">
+
 ---
 
 #### Mobile View
