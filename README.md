@@ -14,6 +14,20 @@ This application is designed for gym owners or managers. The application stores 
 
 ---
 
-Desktop View:
+#### Desktop View:
 
-![alt text](![image](https://user-images.githubusercontent.com/100353887/181903176-c64fba2b-44a6-4ab2-a3f7-05f16378f6c2.png) "Login Page")
+### Home Page
+
+<img width="850" alt="image" src="https://user-images.githubusercontent.com/100353887/181903823-65cfbeb2-b9b6-4885-aa83-07f67a6375da.png">
+
+### Membership Plans
+
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/100353887/181903885-219d1862-13bb-4ad3-b104-425a4b517dcc.png">
+
+---
+
+#### Mobile View
+
+<img width="419" alt="image" src="https://user-images.githubusercontent.com/100353887/181903982-d35bb020-757b-47c3-b113-fef495c70b54.png">
+
+<img width="407" alt="image" src="https://user-images.githubusercontent.com/100353887/181904006-0fcbd573-d693-4eec-b056-728ab32832a8.png">
