@@ -11,6 +11,8 @@ This application is designed for gym owners or managers. The application stores 
 * Store differnt types of memebership plans with their duration and price
 * Register new gym members with their respective membership plan
 * Apply **CRUD** operations on the gym members and also the membership plans
+* Track membership duration of memebers
+* Renew membership plans or switch plans
 
 ---
 
