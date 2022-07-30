@@ -14,4 +14,6 @@ This application is designed for gym owners or managers. The application stores 
 
 ---
 
+Desktop View:
 
+![alt text](https://user-images.githubusercontent.com/100353887/181903005-99381f5b-c3be-41f1-b5e2-88e58853f2ef.png "Login Page")
