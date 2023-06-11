@@ -1,89 +1,136 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>{% block title %}Membership Management{% endblock %}</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'Membership/A.style.css.pagespeed.cf.4cGS_Kvzku.css' %}">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'Membership/A.style.css.pagespeed.cf.4cGS_Kvzku.css' %}"
+    />
     {% block style %} {% endblock %}
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div class="container">
-        <div class="row justify-content-between">
-            <div class="col">
-                <a class="navbar-brand" href="{% url 'index' %}">Gym
-                    <span>Membership Manager</span></a>
-            </div>
-            <div class="col d-flex justify-content-end">
-            </div>
+      <div class="row justify-content-between">
+        <div class="col">
+          <a class="navbar-brand" href="{% url 'index' %}"
+            >Gym <span>Membership Manager</span></a
+          >
         </div>
+        <div class="col d-flex justify-content-end"></div>
+      </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span> Menu
+    <nav
+      class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+      id="ftco-navbar"
+    >
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#ftco-nav"
+          aria-controls="ftco-nav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="fa fa-bars"></span> Menu
+        </button>
+        {% if user.is_authenticated %}
+        <form
+          action="{% url 'member-search' %}"
+          class="searchform order-lg-last"
+        >
+          <div class="form-group d-flex">
+            {{searchform}}
+            <button type="submit" placeholder="" class="form-control search">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-search"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                />
+              </svg>
             </button>
-            {% if user.is_authenticated %}
-            <form action="{% url 'member-search' %}" class="searchform order-lg-last">
-                <div class="form-group d-flex">
-                    {{searchform}}
-                    <button type="submit" placeholder="" class="form-control search">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-search" viewBox="0 0 16 16">
-                            <path
-                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                        </svg></button>
-                </div>
-            </form>
+          </div>
+        </form>
+        {%endif%}
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated == False %}
+            <li class="nav-item active">
+              <a href="{% url 'index' %}" class="nav-link">Home</a>
+            </li>
+            {% endif %} {% if user.is_authenticated %}
+            <li class="nav-item active">
+              <a href="{% url 'all-members' %}" class="nav-link">All Members</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'add-members' %}" class="nav-link">Add Members</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'membership' %}" class="nav-link"
+                >Membership Plan</a
+              >
+            </li>
             {%endif%}
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="dropdown04"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                >Account</a
+              >
+              <div class="dropdown-menu" aria-labelledby="dropdown04">
+                {% if user.is_authenticated %}
+                <a class="dropdown-item" href="{% url 'logout'  %}">Logout</a>
+                {% else %}
+                <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                <a class="dropdown-item" href="{% url 'register' %}"
+                  >Register</a
+                >
 
-
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav mr-auto">
-                    {% if user.is_authenticated == False %}
-                    <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
-                    {% endif %}
-                    {% if user.is_authenticated %}
-                    <li class="nav-item active"><a href="{% url 'all-members' %}" class="nav-link">All Members</a></li>
-                    <li class="nav-item"><a href="{% url 'add-members' %}" class="nav-link">Add Members</a></li>
-                    <li class="nav-item"><a href="{% url 'membership' %}" class="nav-link">Membership Plan</a></li>
-                    {%endif%}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Account</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown04">
-                            {% if user.is_authenticated %}
-                            <a class="dropdown-item" href="{% url 'logout'  %}">Logout</a>
-                            {% else %}
-                            <a class="dropdown-item" href="{% url 'login' %}">Login</a>
-                            <a class="dropdown-item" href="{% url 'register' %}">Register</a>
-                            <a class="dropdown-item"
-                                href="https://preview.colorlib.com/theme/bootstrap/website-menu-12/?#">Page 4</a>
-                            {% endif %}
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                {% endif %}
+              </div>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <script src="{% static 'Membership/jquery.min.js.download' %}"></script>
-    <script
-        src="{% static 'Membership/popper.js+bootstrap.min.js+main.js.pagespeed.jc.CkBNE38wgd.js.download' %}"></script>
-    <script>eval(mod_pagespeed_KCPclvFWlk);</script>
-    <script>eval(mod_pagespeed_ymehVf8unZ);</script>
-    <script>eval(mod_pagespeed_CAIy$zxYJF);</script>
-
+    <script src="{% static 'Membership/popper.js+bootstrap.min.js+main.js.pagespeed.jc.CkBNE38wgd.js.download' %}"></script>
+    <script>
+      eval(mod_pagespeed_KCPclvFWlk);
+    </script>
+    <script>
+      eval(mod_pagespeed_ymehVf8unZ);
+    </script>
+    <script>
+      eval(mod_pagespeed_CAIy$zxYJF);
+    </script>
 
     {% block body %}{% endblock %}
-</body>
-{% block script %}{% endblock %}
-
+  </body>
+  {% block script %}{% endblock %}
 </html>
